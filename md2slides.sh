@@ -31,7 +31,11 @@ declare -a yaml=(
 "title: $project project status"
 "author: $author"
 "date: $day"
-"output: revealjs::revealjs_presentation"
+"output:"
+"  revealjs::revealjs_presentation:"
+"    theme: beige"
+"    self_contained: false"
+"    reveal_plugins: ['notes', 'search', 'chalkboard']"
 "---"
 )
 
