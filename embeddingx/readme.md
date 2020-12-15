@@ -83,7 +83,7 @@ Pleural Eff.|cosine | .854| .861
 
 ## Retraining Imaging Model: Results
 
-- [Weights and Biases ](https://wandb.ai/djosephs/embeddingx/sweeps/1d2bv0iv)
+- [Weights and Biases ](https://wandb.ai/djosephs/embeddingx/sweeps/xxpllhu8)
 
 Placeholder for table/figure
 
