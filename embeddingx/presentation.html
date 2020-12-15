@@ -1850,7 +1850,9 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>To avoid this, see <a href="https://github.com/pytorch/pytorch/issues/1137">this git issue</a></li>
 <li>Just return None if exception happens and update collate fn</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>collate_fn <span class="op">=</span> <span class="kw">lambda</span> l: [x <span class="cf">for</span> x <span class="kw">in</span> l <span class="cf">if</span> x <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> collate_fn(batch):</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    batch <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> x: x <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>, batch))</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="cf">return</span> torch.utils.data.dataloader.default_collate(batch)</span></code></pre></div>
 </section></section>
     </div>
   </div>

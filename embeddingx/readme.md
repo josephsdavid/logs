@@ -13,5 +13,7 @@
 - Just return None if exception happens and update collate fn
 
 ```python
-collate_fn = lambda l: [x for x in l if x is not None]
+def collate_fn(batch):
+    batch = list(filter(lambda x: x is not None, batch))
+    return torch.utils.data.dataloader.default_collate(batch)
 ```
