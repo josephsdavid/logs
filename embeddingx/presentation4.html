@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="presentation_files/reveal.js-3.3.0.1/css/reveal.css"/>
+  <link rel="stylesheet" href="presentation4_files/reveal.js-3.3.0.1/css/reveal.css"/>
 
 
 <style type="text/css">
@@ -76,7 +76,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="presentation_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+<link rel="stylesheet" href="presentation4_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
 
 
   <!-- some tweaks to reveal css -->
@@ -507,8 +507,8 @@ style.innerHTML = style_script;
 document.getElementsByTagName('head')[0].appendChild(style);
 </script>
 
-    <link href="presentation_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-    <link href="presentation_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="presentation4_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="presentation4_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 </head>
 <body>
   <div class="reveal">
@@ -546,171 +546,227 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <span id="cb1-10"><a href="#cb1-10"></a><span class="kw">def</span> collate_fn(batch):</span>
 <span id="cb1-11"><a href="#cb1-11"></a>    batch <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> x: x <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>, batch))</span>
 <span id="cb1-12"><a href="#cb1-12"></a>    <span class="cf">return</span> torch.utils.data.dataloader.default_collate(batch)</span></code></pre></div>
-</section><section id="test-set-results" class="slide level2">
-<h2>Test Set Results</h2>
-<style>.container{display: flex;}.col{flex: 1;}</style>
-<div class="container">
-<div class="col">
+</section></section>
+<section><section id="test-set-results" class="title-slide slide level1"><h1>Test Set Results</h1><ul>
+<li>Scroll down to see results!</li>
+<li>Produced by using our best val loss models on the test set</li>
+<li>See script test_finetune.py</li>
+<li>Needs to be made modular</li>
+</ul></section><section id="section" class="slide level2">
+<h2></h2>
 <table>
 <thead>
 <tr class="header">
-<th>Task</th>
 <th>Loss</th>
 <th>Auroc</th>
 <th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Atelectasis</strong></td>
 <td>l1</td>
-<td>.617</td>
-<td>.752</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="even">
-<td>-</td>
 <td>l2</td>
-<td>.818</td>
-<td>.880</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="odd">
-<td>-</td>
 <td>cosine</td>
-<td>.808</td>
-<td>.885</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
+</section><section id="cardiomegaly-results" class="slide level2">
+<h2>Cardiomegaly Results</h2>
 <table>
 <thead>
 <tr class="header">
-<th>Task</th>
 <th>Loss</th>
 <th>Auroc</th>
 <th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Cardiomegaly</strong></td>
 <td>l1</td>
-<td>.367</td>
-<td>.649</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="even">
-<td>-</td>
 <td>l2</td>
-<td>.830</td>
-<td>.933</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="odd">
-<td>-</td>
 <td>cosine</td>
-<td>.706</td>
-<td>.853</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="col">
+</section><section id="consolidation-results" class="slide level2">
+<h2>Consolidation Results</h2>
 <table>
 <thead>
 <tr class="header">
-<th>Task</th>
 <th>Loss</th>
 <th>Auroc</th>
 <th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Consolidation</strong></td>
 <td>l1</td>
-<td>.733</td>
-<td>.921</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="even">
-<td>-</td>
 <td>l2</td>
-<td>.462</td>
-<td>.844</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="odd">
-<td>-</td>
 <td>cosine</td>
-<td>.731</td>
-<td>.916</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
+</section><section id="edema-results" class="slide level2">
+<h2>Edema Results</h2>
 <table>
 <thead>
 <tr class="header">
-<th>Task</th>
 <th>Loss</th>
 <th>Auroc</th>
 <th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Edema</strong></td>
 <td>l1</td>
-<td>.903</td>
-<td>.937</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="even">
-<td>-</td>
 <td>l2</td>
-<td>.903</td>
-<td>.941</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="odd">
-<td>-</td>
 <td>cosine</td>
-<td>.836</td>
-<td>.886</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
+</section><section id="pleural-effusion-results" class="slide level2">
+<h2>Pleural Effusion Results</h2>
 <table>
 <thead>
 <tr class="header">
-<th>Task</th>
 <th>Loss</th>
 <th>Auroc</th>
 <th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Pleural Eff.</strong></td>
 <td>l1</td>
-<td>.885</td>
-<td>.875</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="even">
-<td>-</td>
 <td>l2</td>
-<td>.886</td>
-<td>.873</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="odd">
-<td>-</td>
 <td>cosine</td>
-<td>.854</td>
-<td>.861</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
 </section></section>
+<section id="columns" class="title-slide slide level1"><h1>columns</h1><style>.container{display: flex;}.col{flex: 1;}</style>
+<div class="container">
+<div class="col">
+<p>ok</p>
+</div>
+<div class="col">
+<p>ok</p>
+</div>
+</div></section>
     </div>
   </div>
 
-  <script src="presentation_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
-  <script src="presentation_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+  <script src="presentation4_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="presentation4_files/reveal.js-3.3.0.1/js/reveal.js"></script>
 
   <script>
 
@@ -741,9 +797,9 @@ document.getElementsByTagName('head')[0].appendChild(style);
 
         // Optional reveal.js plugins
         dependencies: [
-          { src: 'presentation_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
-          { src: 'presentation_files/reveal.js-3.3.0.1/plugin/search/search.js', async: true },
-          { src: 'presentation_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+          { src: 'presentation4_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'presentation4_files/reveal.js-3.3.0.1/plugin/search/search.js', async: true },
+          { src: 'presentation4_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
         ]
       });
     </script>

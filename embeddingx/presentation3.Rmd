@@ -1,3 +1,13 @@
+---
+title: embeddingx project status
+author: David Josephs
+date: December 15
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    self_contained: false
+    reveal_plugins: ['notes', 'search', 'chalkboard']
+---
 # December 15 
 
 ## Plans for today
@@ -30,7 +40,7 @@ def collate_fn(batch):
 
 ## Test Set Results
 
-cstart
+<style>.container{display: flex;}.col{flex: 1;}</style><div class='container'><div class='col'>
 
 Task | Loss | Auroc | Auprc 
 --- | --- | --- | --- 
@@ -46,7 +56,7 @@ Task |Loss | Auroc | Auprc
 -|l2 | .830| .933
 -|cosine | .706	| .853
 
-cmid
+</div><div class='col'>
 
 Task |Loss | Auroc | Auprc 
 --- | --- | --- | --- 

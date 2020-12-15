@@ -39,10 +39,21 @@ declare -a yaml=(
 "---"
 )
 
+begincol="<style>.container{display: flex;}.col{flex: 1;}<\/style><div class='container'><div class='col'>"
+midcol="<\/div><div class='col'>"
+endcol="<\/div><\/div>"
+
+
 
 printf '%s\n' "${yaml[@]}" > "$rmd_file"
 cd "$project" || exit
 cat "$source_file">> "presentation.Rmd"
+sed "s/cstart/$begincol/g" presentation.Rmd > presentation2.Rmd
+sed "s/cmid/$midcol/g" presentation2.Rmd > presentation3.Rmd
+sed "s/cend/$endcol/g" presentation3.Rmd > presentation.Rmd
 Rscript -e "rmarkdown::render('presentation.Rmd')" || exit
-rm presentation.Rmd
+rm presentation.Rmd ||
+rm presentation1.Rmd ||
+rm presentation2.Rmd ||
+rm presentation3.Rmd ||
 cd .. || exit
