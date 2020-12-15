@@ -1,6 +1,6 @@
 # December 15 
 
-## Plans for today
+**Plans for today**
 
 - run on test set
 - start retraining vision models 
@@ -72,12 +72,13 @@ Pleural Eff.|cosine | .854| .861
 
 ## Retraining Imaging Model: Notes
 
-- We have physician labels on our validation set now, need new baselines
-- Retrain imaging model on each chexpert task, with 1, 5, 10, 25, and 100% of data
+- Retrain imaging model on each task, with 1, 5, 10, 25, and 100% of data and new labels
 - New lightning module: **EmbeddingXImagingModel**
-- Lightning cannot checkpoint on val_auprc, figure out a hack when it matters
-- Using data augmentation, we should fine tune with augmentation perhaps
-- Realized in BERT tokenizer, we do not have to pad since we are using the pooled output, only truncate
+- Lightning cannot checkpoint on val_auprc
+	- figure out a hack when it matters
+- Using data augmentation, should we fine tune with augmentation?
+- Using pooled output for embedding
+	- do not have to pad sequences
 
 
 ## Retraining Imaging Model: Results
@@ -92,5 +93,7 @@ Placeholder for table/figure
 - Why is LR finder failing?
 	- assumption is small percentages give it trouble, maybe best to find and log ideal lr with full dataset and log it and never run the lr finder
 - Figure out checkpointing hack
+- Do not have to pad sequences on BERT
+- Should we be fine tuning with augmentation now?
 
 
