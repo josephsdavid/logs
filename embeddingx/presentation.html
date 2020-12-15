@@ -76,7 +76,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="presentation_files/reveal.js-3.3.0.1/css/theme/beige.css" id="theme">
+<link rel="stylesheet" href="presentation_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
 
 
   <!-- some tweaks to reveal css -->
@@ -530,13 +530,221 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </section><section id="test-set-observations" class="slide level2">
 <h2>Test set observations</h2>
 <ul>
-<li>some images do not load properly (corrupted maybe?)</li>
+<li>some images do not load properly (corrupted maybe?) (TODO for Mars )</li>
 <li>To avoid this, see <a href="https://github.com/pytorch/pytorch/issues/1137">this git issue</a></li>
 <li>Just return None if exception happens and update collate fn</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> collate_fn(batch):</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    batch <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> x: x <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>, batch))</span>
-<span id="cb1-3"><a href="#cb1-3"></a>    <span class="cf">return</span> torch.utils.data.dataloader.default_collate(batch)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="cf">try</span>:</span>
+<span id="cb1-3"><a href="#cb1-3"></a>        img <span class="op">=</span> cv2.imread(data[idx])</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="cf">except</span>:</span>
+<span id="cb1-5"><a href="#cb1-5"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="cf">return</span> img</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># ...</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">def</span> collate_fn(batch):</span>
+<span id="cb1-11"><a href="#cb1-11"></a>    batch <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> x: x <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>, batch))</span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="cf">return</span> torch.utils.data.dataloader.default_collate(batch)</span></code></pre></div>
+</section></section>
+<section><section id="test-set-results-atelectasis" class="title-slide slide level1"><h1>Test Set Results: Atelectasis</h1><p>Scroll down for other classes</p>
+<table>
+<thead>
+<tr class="header">
+<th>Loss</th>
+<th>Auroc</th>
+<th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>l2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>cosine</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></section><section id="cardiomegaly-results" class="slide level2">
+<h2>Cardiomegaly Results</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Loss</th>
+<th>Auroc</th>
+<th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>l2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>cosine</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section><section id="consolidation-results" class="slide level2">
+<h2>Consolidation Results</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Loss</th>
+<th>Auroc</th>
+<th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>l2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>cosine</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section><section id="edema-results" class="slide level2">
+<h2>Edema Results</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Loss</th>
+<th>Auroc</th>
+<th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>l2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>cosine</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section><section id="pleural-effusion-results" class="slide level2">
+<h2>Pleural Effusion Results</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Loss</th>
+<th>Auroc</th>
+<th>Auprc</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>l2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>cosine</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
 </section></section>
     </div>
   </div>
