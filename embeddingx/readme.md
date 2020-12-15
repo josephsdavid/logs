@@ -87,3 +87,10 @@ Pleural Eff.|cosine | .854| .861
 Placeholder for table/figure
 
 
+# Remarks: December 15
+
+- Why is LR finder failing?
+	- assumption is small percentages give it trouble, maybe best to find and log ideal lr with full dataset and log it and never run the lr finder
+- Figure out checkpointing hack
+
+
