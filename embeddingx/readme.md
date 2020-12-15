@@ -35,38 +35,38 @@ cstart
 Task | Loss | Auroc | Auprc 
 --- | --- | --- | --- 
 **Atelectasis**|l1 | .617| .752
--|l2 | .818| .880
--|cosine | .808| .885
+Atelectasis|l2 | .818| .880
+Atelectasis|cosine | .808| .885
 
 
 
 Task |Loss | Auroc | Auprc 
 --- | --- | --- | --- 
 **Cardiomegaly**|l1 | .367| .649
--|l2 | .830| .933
--|cosine | .706	| .853
+Cardiomegaly|l2 | .830| .933
+Cardiomegaly|cosine | .706	| .853
 
 cmid
 
 Task |Loss | Auroc | Auprc 
 --- | --- | --- | --- 
 **Consolidation**|l1 | .733| .921
--|l2 | .462| .844
--|cosine | .731| .916
+Consolidation|l2 | .462| .844
+Consolidation|cosine | .731| .916
 
 
 Task |Loss | Auroc | Auprc 
 --- | --- | --- | --- 
 **Edema**|l1 | .903| .937
--|l2 | .903| .941
--|cosine | .836| .886
+Edema|l2 | .903| .941
+Edema|cosine | .836| .886
 
 cend
 
 Task |Loss | Auroc | Auprc 
 --- | --- | --- | --- 
 **Pleural Eff.**|l1 | .885| .875
--|l2 | .886| .873
--|cosine | .854| .861
+Pleural Eff.|l2 | .886| .873
+Pleural Eff.|cosine | .854| .861
 
 
