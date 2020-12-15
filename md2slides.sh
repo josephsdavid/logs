@@ -34,8 +34,6 @@ declare -a yaml=(
 "output:"
 "  revealjs::revealjs_presentation:"
 "    theme: simple"
-"    self_contained: false"
-"    reveal_plugins: ['notes', 'search', 'chalkboard']"
 "---"
 )
 
@@ -53,7 +51,6 @@ sed "s/cmid/$midcol/g" presentation2.Rmd > presentation3.Rmd
 sed "s/cend/$endcol/g" presentation3.Rmd > presentation.Rmd
 Rscript -e "rmarkdown::render('presentation.Rmd')" || exit
 rm presentation.Rmd
-rm presentation1.Rmd
 rm presentation2.Rmd
 rm presentation3.Rmd
 cd .. || exit
