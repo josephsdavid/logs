@@ -3,8 +3,8 @@
 ## Plans for today
 
 - run on test set
+- start retraining vision models 
 - write mimic dataloader (tonight)
-- start retraining vision models (day)
 
 ## Test set observations
 
@@ -68,5 +68,22 @@ Task |Loss | Auroc | Auprc
 **Pleural Eff.**|l1 | .885| .875
 Pleural Eff.|l2 | .886| .873
 Pleural Eff.|cosine | .854| .861
+
+
+## Retraining Imaging Model: Notes
+
+- We have physician labels on our validation set now, need new baselines
+- Retrain imaging model on each chexpert task, with 1, 5, 10, 25, and 100% of data
+- New lightning module: **EmbeddingXImagingModel**
+- Lightning cannot checkpoint on val_auprc, figure out a hack when it matters
+- Using data augmentation, we should fine tune with augmentation perhaps
+- Realized in BERT tokenizer, we do not have to pad since we are using the pooled output, only truncate
+
+
+## Retraining Imaging Model: Results
+
+- [Weights and Biases ](https://wandb.ai/djosephs/embeddingx/sweeps/1d2bv0iv)
+
+Placeholder for table/figure
 
 

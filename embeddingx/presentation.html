@@ -1840,8 +1840,8 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <h2>Plans for today</h2>
 <ul>
 <li>run on test set</li>
+<li>start retraining vision models</li>
 <li>write mimic dataloader (tonight)</li>
-<li>start retraining vision models (day)</li>
 </ul>
 </section><section id="test-set-observations" class="slide level2">
 <h2>Test set observations</h2>
@@ -2021,6 +2021,22 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </tr>
 </tbody>
 </table>
+</section><section id="retraining-imaging-model-notes" class="slide level2">
+<h2>Retraining Imaging Model: Notes</h2>
+<ul>
+<li>We have physician labels on our validation set now, need new baselines</li>
+<li>Retrain imaging model on each chexpert task, with 1, 5, 10, 25, and 100% of data</li>
+<li>New lightning module: <strong>EmbeddingXImagingModel</strong></li>
+<li>Lightning cannot checkpoint on val_auprc, figure out a hack when it matters</li>
+<li>Using data augmentation, we should fine tune with augmentation perhaps</li>
+<li>Realized in BERT tokenizer, we do not have to pad since we are using the pooled output, only truncate</li>
+</ul>
+</section><section id="retraining-imaging-model-results" class="slide level2">
+<h2>Retraining Imaging Model: Results</h2>
+<ul>
+<li><a href="https://wandb.ai/djosephs/embeddingx/sweeps/1d2bv0iv">Weights and Biases</a></li>
+</ul>
+<p>Placeholder for table/figure</p>
 </section></section>
     </div>
   </div>
