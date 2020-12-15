@@ -83,7 +83,7 @@ Pleural Eff.|cosine | .854| .861
 
 ## Retraining Imaging Model: Results
 
-- [Weights and Biases ](https://wandb.ai/djosephs/embeddingx/sweeps/xxpllhu8)
+- [Weights and Biases ](https://wandb.ai/djosephs/embeddingx/sweeps/suy6ri36)
 
 Placeholder for table/figure
 
@@ -95,5 +95,6 @@ Placeholder for table/figure
 - Figure out checkpointing hack
 - Do not have to pad sequences on BERT
 - Should we be fine tuning with augmentation now?
+- Getting a mysterious error with multi gpu, so just using one for now, fix tomorrow
 
 
