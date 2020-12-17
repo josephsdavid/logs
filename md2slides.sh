@@ -2,9 +2,10 @@
 #! nix-shell -i bash -p R rPackages.rmarkdown rPackages.revealjs
 
 project="$1"
-author="${2:-David Josephs}"
-source_file="${3:-readme.md}"
+source_file="${2:-readme.md}"
 day=$(date '+%B %d')
+
+author=$( grep author "$project"/.mdslidesrc | awk '{split($0, a, "="); print a[2]}' )
 
 rmd_file="$project/presentation.Rmd"
 
@@ -28,7 +29,7 @@ fi
 
 declare -a yaml=(
 "---"
-"title: $project project status"
+"title: $project Project Status"
 "author: $author"
 "date: $day"
 "output:"

@@ -98,3 +98,11 @@ Placeholder for table/figure
 - Getting a mysterious error with multi gpu, so just using one for now, fix tomorrow
 
 
+# December 17 
+
+- Met with Shirley today
+- New direction: focus on chexpert tasks
+- Review domain adaptation papers sent to us
+- If poor results on chexpert tasks, adversarial or contrastive approach 
+	- Probably contrastive
+- Need to think of how to make this a more technical contribution
