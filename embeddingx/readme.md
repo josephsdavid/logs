@@ -105,4 +105,82 @@ Placeholder for table/figure
 - Review domain adaptation papers sent to us
 - If poor results on chexpert tasks, adversarial or contrastive approach 
 	- Probably contrastive
+	- More domain adaptation review!
 - Need to think of how to make this a more technical contribution
+- Learning with noisy labels
+
+
+# December 21
+
+Plans:
+
+- Get 1% of data full pipeline on the 5 chexpert tasks + no finding
+	- Make sure to log per class auroc and auprc, dont worry about other metrics
+	- Save not by loss but by auprc
+- Finalize literature review on sheets
+- Put any notes here
+- Time allowing: Clean up discovery
+
+Notes:
+
+- We have interesting case of noisy labels where they are just sometimes missing
+
+
+## Fixing pipeline: per class metrics
+
+Proper per class metrics for non full task classification, and saving by auprc
+
+```python
+def evaluate_generator(metric, name):
+    def result(true, probs, tasks, split):
+	scores = undefined_catcher(metric, np.vstack(true), np.vstack(probs), average=None)
+        tasks = [f"{split}_{task}_{name}" for task in tasks]
+        scores_dict = dict(zip(tasks, list(scores)))
+        scores_dict[f"{split}_{name}"] = scores.mean()
+        return scores_dict
+    return result
+
+evaluate_auroc = evaluate_generator(sk_metrics.roc_auc_score, "auroc")
+evaluate_auprc = evaluate_generator(sk_metrics.average_precision_score, "auprc")
+
+# usage
+auroc_dict = util.evaluate_auroc(val_true, val_probs, self.tasks, "val")
+auprc_dict = util.evaluate_auprc(val_true, val_probs, self.tasks, "val")
+```
+
+## Pipeline: BERT
+
+https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu
+
+- command: `./run.sh -l config/train_nlp.sh`
+- Might consider switching to 5%
+
+
+## Pipeline: Distance minimization
+
+Placeholder
+
+- command: `./run.sh -l config/joint_sim_frozen_bert.yaml` update with bert weights first
+
+
+## Pipeline: Fine tune
+
+data augmentation here
+
+Placeholder
+
+- command: `./run.sh -l config/fine_tune_base.yaml` NEEDS to be written with weights from distance!
+
+
+## Pipeline: notes
+
+Need to debug lr finder
+
+
+
+## Lit review
+
+- Key paper for noisy labels: https://export.arxiv.org/pdf/1809.01465
+- TODO (tonight): Take offline notes for noisy labels and add to sheets
+- Take Shirley DA notes + my notes and add to sheets
+- Other notes: adversarial training may work for both noisy labels and domain adaptation, we might want to pursue if our current approach does not work out

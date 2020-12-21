@@ -1833,7 +1833,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section>
     <h1 class="title">embeddingx Project Status</h1>
     <h2 class="author">David Josephs</h2>
-    <h3 class="date">December 17</h3>
+    <h3 class="date">December 21</h3>
 </section>
 
 <section><section id="december-15" class="title-slide slide level1"><h1>December 15</h1><p><strong>Plans for today</strong></p>
@@ -2058,9 +2058,75 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>If poor results on chexpert tasks, adversarial or contrastive approach
 <ul>
 <li>Probably contrastive</li>
+<li>More domain adaptation review!</li>
 </ul></li>
 <li>Need to think of how to make this a more technical contribution</li>
+<li>Learning with noisy labels</li>
 </ul></section>
+<section><section id="december-21" class="title-slide slide level1"><h1>December 21</h1><p>Plans:</p>
+<ul>
+<li>Get 1% of data full pipeline on the 5 chexpert tasks + no finding
+<ul>
+<li>Make sure to log per class auroc and auprc, dont worry about other metrics</li>
+<li>Save not by loss but by auprc</li>
+</ul></li>
+<li>Finalize literature review on sheets</li>
+<li>Put any notes here</li>
+<li>Time allowing: Clean up discovery</li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>We have interesting case of noisy labels where they are just sometimes missing</li>
+</ul></section><section id="fixing-pipeline-per-class-metrics" class="slide level2">
+<h2>Fixing pipeline: per class metrics</h2>
+<p>Proper per class metrics for non full task classification, and saving by auprc</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> evaluate_generator(metric, name):</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">def</span> result(true, probs, tasks, split):</span>
+<span id="cb2-3"><a href="#cb2-3"></a>    scores <span class="op">=</span> undefined_catcher(metric, np.vstack(true), np.vstack(probs), average<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>        tasks <span class="op">=</span> [<span class="ss">f&quot;</span><span class="sc">{</span>split<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>task<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">&quot;</span> <span class="cf">for</span> task <span class="kw">in</span> tasks]</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        scores_dict <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(tasks, <span class="bu">list</span>(scores)))</span>
+<span id="cb2-6"><a href="#cb2-6"></a>        scores_dict[<span class="ss">f&quot;</span><span class="sc">{</span>split<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">&quot;</span>] <span class="op">=</span> scores.mean()</span>
+<span id="cb2-7"><a href="#cb2-7"></a>        <span class="cf">return</span> scores_dict</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="cf">return</span> result</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a>evaluate_auroc <span class="op">=</span> evaluate_generator(sk_metrics.roc_auc_score, <span class="st">&quot;auroc&quot;</span>)</span>
+<span id="cb2-11"><a href="#cb2-11"></a>evaluate_auprc <span class="op">=</span> evaluate_generator(sk_metrics.average_precision_score, <span class="st">&quot;auprc&quot;</span>)</span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co"># usage</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>auroc_dict <span class="op">=</span> util.evaluate_auroc(val_true, val_probs, <span class="va">self</span>.tasks, <span class="st">&quot;val&quot;</span>)</span>
+<span id="cb2-15"><a href="#cb2-15"></a>auprc_dict <span class="op">=</span> util.evaluate_auprc(val_true, val_probs, <span class="va">self</span>.tasks, <span class="st">&quot;val&quot;</span>)</span></code></pre></div>
+</section><section id="pipeline-bert" class="slide level2">
+<h2>Pipeline: BERT</h2>
+<p><a href="https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu" class="uri">https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu</a></p>
+<ul>
+<li>command: <code>./run.sh -l config/train_nlp.sh</code></li>
+<li>Might consider switching to 5%</li>
+</ul>
+</section><section id="pipeline-distance-minimization" class="slide level2">
+<h2>Pipeline: Distance minimization</h2>
+<p>Placeholder</p>
+<ul>
+<li>command: <code>./run.sh -l config/joint_sim_frozen_bert.yaml</code> update with bert weights first</li>
+</ul>
+</section><section id="pipeline-fine-tune" class="slide level2">
+<h2>Pipeline: Fine tune</h2>
+<p>data augmentation here</p>
+<p>Placeholder</p>
+<ul>
+<li>command: <code>./run.sh -l config/fine_tune_base.yaml</code> NEEDS to be written with weights from distance!</li>
+</ul>
+</section><section id="pipeline-notes" class="slide level2">
+<h2>Pipeline: notes</h2>
+<p>Need to debug lr finder</p>
+</section><section id="lit-review" class="slide level2">
+<h2>Lit review</h2>
+<ul>
+<li>Key paper for noisy labels: <a href="https://export.arxiv.org/pdf/1809.01465" class="uri">https://export.arxiv.org/pdf/1809.01465</a></li>
+<li>TODO (tonight): Take offline notes for noisy labels and add to sheets</li>
+<li>Take Shirley DA notes + my notes and add to sheets</li>
+<li>Other notes: adversarial training may work for both noisy labels and domain adaptation, we might want to pursue if our current approach does not work out</li>
+</ul>
+</section></section>
     </div>
   </div>
 
