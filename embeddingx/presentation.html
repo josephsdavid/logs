@@ -2116,7 +2116,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </ul>
 </section><section id="pipeline-distance-minimization" class="slide level2">
 <h2>Pipeline: Distance minimization</h2>
-<p><a href="https://wandb.ai/djosephs/embeddingx/sweeps/6j8vozywholder" class="uri">https://wandb.ai/djosephs/embeddingx/sweeps/6j8vozywholder</a></p>
+<p><a href="https://wandb.ai/djosephs/embeddingx/sweeps/deo0pf2a" class="uri">https://wandb.ai/djosephs/embeddingx/sweeps/deo0pf2a</a></p>
 <ul>
 <li>command: <code>./run.sh -l config/joint_sim_frozen_bert.yaml</code> update with bert weights first</li>
 <li>Results stored in :</li>
@@ -2174,10 +2174,18 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </section><section id="lit-review" class="slide level2">
 <h2>Lit review</h2>
 <ul>
-<li>Key paper for noisy labels: <a href="https://export.arxiv.org/pdf/1809.01465" class="uri">https://export.arxiv.org/pdf/1809.01465</a></li>
-<li>TODO (tonight): Take offline notes for noisy labels and add to sheets</li>
-<li>Take Shirley DA notes + my notes and add to sheets</li>
-<li>Other notes: adversarial training may work for both noisy labels and domain adaptation, we might want to pursue if our current approach does not work out</li>
+<li>Loss based methods focus on softmax classification and binary classification, I am not sure how they extend to our multilabel scenario
+<ul>
+<li>I do not have the math background yet</li>
+</ul></li>
+<li>We have an interesting case where labels AND sometimes information is missing from the training data.</li>
+<li>I think we should therefore focus on how we can use our validation dataset (or some other subset of physician labels) to regularize our training.</li>
+<li>Two key approaches:
+<ul>
+<li><a href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Simon_Jenni_Deep_Bilevel_Learning_ECCV_2018_paper.pdf">Bilevel optimization (ECCV 2018 (30))</a></li>
+<li><a href="https://arxiv.org/abs/1805.09622">SOSOLETO (ICLR 2019 best paper)(4)</a></li>
+</ul></li>
+<li>I really like Shirley’s citation format with the [CONFERENCE YEAR] (Citations), we should use this</li>
 </ul>
 </section></section>
     </div>

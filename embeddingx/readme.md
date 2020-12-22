@@ -168,7 +168,7 @@ https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu
 
 ## Pipeline: Distance minimization
 
-https://wandb.ai/djosephs/embeddingx/sweeps/6j8vozywholder
+https://wandb.ai/djosephs/embeddingx/sweeps/deo0pf2a
 
 - command: `./run.sh -l config/joint_sim_frozen_bert.yaml` update with bert weights first
 - Results stored in :
@@ -206,7 +206,12 @@ Need to debug lr finder
 
 ## Lit review
 
-- Key paper for noisy labels: https://export.arxiv.org/pdf/1809.01465
-- TODO (tonight): Take offline notes for noisy labels and add to sheets
-- Take Shirley DA notes + my notes and add to sheets
-- Other notes: adversarial training may work for both noisy labels and domain adaptation, we might want to pursue if our current approach does not work out
+- Loss based methods focus on softmax classification and binary classification, I am not sure how they extend to our multilabel scenario
+	- I do not have the math background yet
+- We have an interesting case where labels AND sometimes information is missing from the training data.
+- I think we should therefore focus on how we can use our validation dataset (or some other subset of physician labels) to regularize our training.
+- Two key approaches:
+	- [Bilevel optimization (ECCV 2018 (30))](http://openaccess.thecvf.com/content_ECCV_2018/papers/Simon_Jenni_Deep_Bilevel_Learning_ECCV_2018_paper.pdf)
+	- [SOSOLETO (ICLR 2019 best paper)(4)](https://arxiv.org/abs/1805.09622)
+- I really like Shirley's citation format with the [CONFERENCE YEAR] (Citations), we should use this
+
