@@ -153,14 +153,40 @@ auprc_dict = util.evaluate_auprc(val_true, val_probs, self.tasks, "val")
 https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu
 
 - command: `./run.sh -l config/train_nlp.sh`
+- Weights saved at `/data/embeddingx/ckpts/medical_bert/iter_2/all/0/0.01/0.601`
+	- TODO: update weight saving so i dont have to sort through timestamps in this script
 - Might consider switching to 5%
+
+
+## Pipeline: BERT 1% results
+
+- **val auroc**: 0.707
+- **val_auprc**: 0.601
+- **step**: 87
+- TODO: rerun on 5% after this set of runs finishes
 
 
 ## Pipeline: Distance minimization
 
-Placeholder
+https://wandb.ai/djosephs/embeddingx/sweeps/6j8vozywholder
 
 - command: `./run.sh -l config/joint_sim_frozen_bert.yaml` update with bert weights first
+- Results stored in :
+
+```python
+filepath = f"{args.weights_save_path}/new_bert_embedding/{args.similarity_metric}/{args.task}/classifier_test/"
+```
+- TODO: update where they are stored
+
+
+## Pipeline: Distance minimization results
+
+
+Loss_fn | Val Auroc | Val Auprc | Val Loss | Train Loss
+ --- | --- | --- | --- | ---
+l1 | 0| 0 | 0 |0
+l2 | 0 | 0  | 0 | 0
+cosine | 0 | 0  | 0 | 0
 
 
 ## Pipeline: Fine tune

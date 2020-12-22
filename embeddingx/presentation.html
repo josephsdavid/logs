@@ -2100,14 +2100,67 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <p><a href="https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu" class="uri">https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu</a></p>
 <ul>
 <li>command: <code>./run.sh -l config/train_nlp.sh</code></li>
+<li>Weights saved at <code>/data/embeddingx/ckpts/medical_bert/iter_2/all/0/0.01/0.601</code>
+<ul>
+<li>TODO: update weight saving so i dont have to sort through timestamps in this script</li>
+</ul></li>
 <li>Might consider switching to 5%</li>
+</ul>
+</section><section id="pipeline-bert-1-results" class="slide level2">
+<h2>Pipeline: BERT 1% results</h2>
+<ul>
+<li><strong>val auroc</strong>: 0.707</li>
+<li><strong>val_auprc</strong>: 0.601</li>
+<li><strong>step</strong>: 87</li>
+<li>TODO: rerun on 5% after this set of runs finishes</li>
 </ul>
 </section><section id="pipeline-distance-minimization" class="slide level2">
 <h2>Pipeline: Distance minimization</h2>
-<p>Placeholder</p>
+<p><a href="https://wandb.ai/djosephs/embeddingx/sweeps/6j8vozywholder" class="uri">https://wandb.ai/djosephs/embeddingx/sweeps/6j8vozywholder</a></p>
 <ul>
 <li>command: <code>./run.sh -l config/joint_sim_frozen_bert.yaml</code> update with bert weights first</li>
+<li>Results stored in :</li>
 </ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>filepath <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>args<span class="sc">.</span>weights_save_path<span class="sc">}</span><span class="ss">/new_bert_embedding/</span><span class="sc">{</span>args<span class="sc">.</span>similarity_metric<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>args<span class="sc">.</span>task<span class="sc">}</span><span class="ss">/classifier_test/&quot;</span></span></code></pre></div>
+<ul>
+<li>TODO: update where they are stored</li>
+</ul>
+</section><section id="pipeline-distance-minimization-results" class="slide level2">
+<h2>Pipeline: Distance minimization results</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Loss_fn</th>
+<th>Val Auroc</th>
+<th>Val Auprc</th>
+<th>Val Loss</th>
+<th>Train Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>l2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>cosine</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
 </section><section id="pipeline-fine-tune" class="slide level2">
 <h2>Pipeline: Fine tune</h2>
 <p>data augmentation here</p>
