@@ -202,7 +202,7 @@ try2: https://wandb.ai/djosephs/embeddingx/sweeps/3c99yw8h
 
 ## Pipeline: Finetune results 1%
 
-NOTE: rerunning currently with different LR to verify it is this bad (it is looking better but still not awesome)
+NOTE: rerunning currently with different LR to verify it is this bad
 
 
 Loss_fn | Val Auroc | Val Auprc 
