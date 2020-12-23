@@ -1833,7 +1833,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section>
     <h1 class="title">embeddingx Project Status</h1>
     <h2 class="author">David Josephs</h2>
-    <h3 class="date">December 21</h3>
+    <h3 class="date">December 22</h3>
 </section>
 
 <section><section id="december-15" class="title-slide slide level1"><h1>December 15</h1><p><strong>Plans for today</strong></p>
@@ -2063,7 +2063,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>Need to think of how to make this a more technical contribution</li>
 <li>Learning with noisy labels</li>
 </ul></section>
-<section><section id="december-21" class="title-slide slide level1"><h1>December 21</h1><p>Plans:</p>
+<section><section id="december-2122" class="title-slide slide level1"><h1>December 21/22</h1><p>Plans:</p>
 <ul>
 <li>Get 1% of data full pipeline on the 5 chexpert tasks + no finding
 <ul>
@@ -2095,11 +2095,12 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <span id="cb2-13"><a href="#cb2-13"></a><span class="co"># usage</span></span>
 <span id="cb2-14"><a href="#cb2-14"></a>auroc_dict <span class="op">=</span> util.evaluate_auroc(val_true, val_probs, <span class="va">self</span>.tasks, <span class="st">&quot;val&quot;</span>)</span>
 <span id="cb2-15"><a href="#cb2-15"></a>auprc_dict <span class="op">=</span> util.evaluate_auprc(val_true, val_probs, <span class="va">self</span>.tasks, <span class="st">&quot;val&quot;</span>)</span></code></pre></div>
-</section><section id="pipeline-bert" class="slide level2">
-<h2>Pipeline: BERT</h2>
+</section><section id="pipeline-bert-1" class="slide level2">
+<h2>Pipeline: BERT 1%</h2>
 <p><a href="https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu" class="uri">https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu</a></p>
 <ul>
 <li>command: <code>./run.sh -l config/train_nlp.sh</code></li>
+<li>stdout logged to: <code>train_nlp.log</code></li>
 <li>Weights saved at <code>/data/embeddingx/ckpts/medical_bert/iter_2/all/0/0.01/0.601</code>
 <ul>
 <li>TODO: update weight saving so i dont have to sort through timestamps in this script</li>
@@ -2114,11 +2115,12 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li><strong>step</strong>: 87</li>
 <li>TODO: rerun on 5% after this set of runs finishes</li>
 </ul>
-</section><section id="pipeline-distance-minimization" class="slide level2">
-<h2>Pipeline: Distance minimization</h2>
+</section><section id="pipeline-distance-minimization-1" class="slide level2">
+<h2>Pipeline: Distance minimization 1%</h2>
 <p><a href="https://wandb.ai/djosephs/embeddingx/sweeps/deo0pf2a" class="uri">https://wandb.ai/djosephs/embeddingx/sweeps/deo0pf2a</a></p>
 <ul>
 <li>command: <code>./run.sh -l config/joint_sim_frozen_bert.yaml</code> update with bert weights first</li>
+<li>stdout logged to: <code>joint_sim_frozen_bert.log</code></li>
 <li>Results stored in :</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>filepath <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>args<span class="sc">.</span>weights_save_path<span class="sc">}</span><span class="ss">/new_bert_embedding/</span><span class="sc">{</span>args<span class="sc">.</span>similarity_metric<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>args<span class="sc">.</span>task<span class="sc">}</span><span class="ss">/classifier_test/&quot;</span></span></code></pre></div>
@@ -2126,7 +2128,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>TODO: update where they are stored</li>
 </ul>
 </section><section id="pipeline-distance-minimization-results" class="slide level2">
-<h2>Pipeline: Distance minimization results</h2>
+<h2>Pipeline: Distance minimization results %</h2>
 <table>
 <thead>
 <tr class="header">
@@ -2140,37 +2142,82 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <tbody>
 <tr class="odd">
 <td>l1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
+<td>.522</td>
+<td>.367</td>
+<td>.352</td>
+<td>.291</td>
 </tr>
 <tr class="even">
 <td>l2</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
+<td>.582</td>
+<td>.4</td>
+<td>13.45</td>
+<td>11.55</td>
 </tr>
 <tr class="odd">
 <td>cosine</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
+<td>.485</td>
+<td>.345</td>
+<td>.322</td>
+<td>.211</td>
 </tr>
 </tbody>
 </table>
-</section><section id="pipeline-fine-tune" class="slide level2">
-<h2>Pipeline: Fine tune</h2>
-<p>data augmentation here</p>
-<p>Placeholder</p>
+</section><section id="pipeline-fine-tune-1" class="slide level2">
+<h2>Pipeline: Fine tune 1%</h2>
+<p><a href="https://wandb.ai/djosephs/embeddingx/sweeps/opapysq5" class="uri">https://wandb.ai/djosephs/embeddingx/sweeps/opapysq5</a> try2: <a href="https://wandb.ai/djosephs/embeddingx/sweeps/3c99yw8h" class="uri">https://wandb.ai/djosephs/embeddingx/sweeps/3c99yw8h</a></p>
 <ul>
-<li>command: <code>./run.sh -l config/fine_tune_base.yaml</code> NEEDS to be written with weights from distance!</li>
+<li>command: <code>./run.sh -l config/fine_tune_base.yaml</code></li>
+<li>Data augmentation this time</li>
+<li>stdout logged to: <code>fine_tune_base.log</code></li>
 </ul>
+</section><section id="pipeline-finetune-results-1" class="slide level2">
+<h2>Pipeline: Finetune results 1%</h2>
+<p>NOTE: rerunning currently with different LR to verify it is this bad (it is looking better but still not awesome)</p>
+<table>
+<thead>
+<tr class="header">
+<th>Loss_fn</th>
+<th>Val Auroc</th>
+<th>Val Auprc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l1</td>
+<td>.468</td>
+<td>.31</td>
+</tr>
+<tr class="even">
+<td>l2</td>
+<td>.5</td>
+<td>.3507</td>
+</tr>
+<tr class="odd">
+<td>cosine</td>
+<td>.5902</td>
+<td>.438</td>
+</tr>
+</tbody>
+</table>
 </section><section id="pipeline-notes" class="slide level2">
 <h2>Pipeline: notes</h2>
 <p>Need to debug lr finder</p>
+<p>We can train BERT AND a fine tune model at the same time, more efficiency in iterative runs</p>
+</section><section id="pipeline-10" class="slide level2">
+<h2>Pipeline: 10%</h2>
+<p><a href="https://wandb.ai/djosephs/embeddingx/runs/243wehbl?workspace=user-djosephs">Worse performance on 5% of data for BERT</a> -&gt; <a href="https://wandb.ai/djosephs/embeddingx/runs/1v8wie8q?workspace=user-djosephs">try 10%</a></p>
+</section><section id="worries-and-thoughts" class="slide level2">
+<h2>Worries and thoughts</h2>
+<ul>
+<li>Maybe we focus on framing our existing work as a clinical paper and then some other approach for a technical paper?</li>
+<li>As soon as we got these physician labels things have gotten further and further from our assumptions</li>
+<li>Assumptions were made when we were getting 100% on the NLP labels, this is not the case
+<ul>
+<li>We have a break from deadlines, maybe instead we just try some experiments on new approaches during this relatively free time</li>
+<li>We have a robust enough lit review we can try other things</li>
+</ul></li>
+</ul>
 </section><section id="lit-review" class="slide level2">
 <h2>Lit review</h2>
 <ul>

@@ -110,7 +110,7 @@ Placeholder for table/figure
 - Learning with noisy labels
 
 
-# December 21
+# December 21/22
 
 Plans:
 
@@ -148,11 +148,12 @@ auroc_dict = util.evaluate_auroc(val_true, val_probs, self.tasks, "val")
 auprc_dict = util.evaluate_auprc(val_true, val_probs, self.tasks, "val")
 ```
 
-## Pipeline: BERT
+## Pipeline: BERT 1%
 
 https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu
 
 - command: `./run.sh -l config/train_nlp.sh`
+- stdout logged to: `train_nlp.log`
 - Weights saved at `/data/embeddingx/ckpts/medical_bert/iter_2/all/0/0.01/0.601`
 	- TODO: update weight saving so i dont have to sort through timestamps in this script
 - Might consider switching to 5%
@@ -166,11 +167,12 @@ https://wandb.ai/djosephs/embeddingx/runs/1rd0dksu
 - TODO: rerun on 5% after this set of runs finishes
 
 
-## Pipeline: Distance minimization
+## Pipeline: Distance minimization  1%
 
 https://wandb.ai/djosephs/embeddingx/sweeps/deo0pf2a
 
 - command: `./run.sh -l config/joint_sim_frozen_bert.yaml` update with bert weights first
+- stdout logged to: `joint_sim_frozen_bert.log`
 - Results stored in :
 
 ```python
@@ -179,30 +181,53 @@ filepath = f"{args.weights_save_path}/new_bert_embedding/{args.similarity_metric
 - TODO: update where they are stored
 
 
-## Pipeline: Distance minimization results
+## Pipeline: Distance minimization results  %
 
 
 Loss_fn | Val Auroc | Val Auprc | Val Loss | Train Loss
  --- | --- | --- | --- | ---
-l1 | 0| 0 | 0 |0
-l2 | 0 | 0  | 0 | 0
-cosine | 0 | 0  | 0 | 0
+l1 | .522| .367 | .352 | .291
+l2 | .582 | .4  | 13.45 | 11.55
+cosine | .485 | .345  | .322 | .211
 
 
-## Pipeline: Fine tune
+## Pipeline: Fine tune 1%
 
-data augmentation here
+https://wandb.ai/djosephs/embeddingx/sweeps/opapysq5
+try2: https://wandb.ai/djosephs/embeddingx/sweeps/3c99yw8h
 
-Placeholder
+- command: `./run.sh -l config/fine_tune_base.yaml`
+- Data augmentation this time
+- stdout logged to: `fine_tune_base.log`
 
-- command: `./run.sh -l config/fine_tune_base.yaml` NEEDS to be written with weights from distance!
+## Pipeline: Finetune results 1%
 
+NOTE: rerunning currently with different LR to verify it is this bad (it is looking better but still not awesome)
+
+
+Loss_fn | Val Auroc | Val Auprc 
+ --- | --- | --- 
+l1 | .468| .31 
+l2 | .5 | .3507  
+cosine | .5902 | .438  
 
 ## Pipeline: notes
 
 Need to debug lr finder
 
+We can train BERT AND a fine tune model at the same time, more efficiency in iterative runs
 
+## Pipeline: 10%
+
+[Worse performance on 5% of data for BERT](https://wandb.ai/djosephs/embeddingx/runs/243wehbl?workspace=user-djosephs) -> [try 10%](https://wandb.ai/djosephs/embeddingx/runs/1v8wie8q?workspace=user-djosephs)
+
+## Worries and thoughts
+
+- Maybe we focus on framing our existing work as a clinical paper and then some other approach for a technical paper? 
+- As soon as we got these physician labels things have gotten further and further from our assumptions
+- Assumptions were made when we were getting 100% on the NLP labels, this is not the case
+	- We have a break from deadlines, maybe instead we just try some experiments on new approaches during this relatively free time
+	- We have a robust enough lit review we can try other things
 
 ## Lit review
 
@@ -214,4 +239,5 @@ Need to debug lr finder
 	- [Bilevel optimization (ECCV 2018 (30))](http://openaccess.thecvf.com/content_ECCV_2018/papers/Simon_Jenni_Deep_Bilevel_Learning_ECCV_2018_paper.pdf)
 	- [SOSOLETO (ICLR 2019 best paper)(4)](https://arxiv.org/abs/1805.09622)
 - I really like Shirley's citation format with the [CONFERENCE YEAR] (Citations), we should use this
+
 
