@@ -228,16 +228,19 @@ We can train BERT AND a fine tune model at the same time, more efficiency in ite
 	- We have a robust enough lit review we can try other things
 - It feels like we are allowing the problem to get too big
 	- We are trying to solve both data modality problem and domain shift problem in one go, this is too hard!
+
+
+## Solution: Reframing???
+
 - Just break it into two problems: 
 	- **A**: Multimodal Learning, ALL within NLP labels
 		- Here our assumptions for our existing work are **completely valid**
-		- Verify on some ML datasets -> at least a workshop paper
+		- Verify on some ML datasets -> at least a workshop paper, potentially conference
 	- **B**: Domain adaptation across both label types maybe in just computer vision
 		- Publish as clinical paper 
-	- **C**: Bonus: show they work in conjunction
+	- **C**: Bonus: show they work in conjunction, maybe as another paper as well, at least arxiv, maybe workshop somewhere
 
 
-## Worri
 ## Lit review
 
 - Loss based methods focus on softmax classification and binary classification, I am not sure how they extend to our multilabel scenario
