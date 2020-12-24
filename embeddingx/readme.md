@@ -205,11 +205,11 @@ try2: https://wandb.ai/djosephs/embeddingx/sweeps/3c99yw8h
 NOTE: rerunning currently with different LR to verify it is this bad
 
 
-Loss_fn | Val Auroc | Val Auprc 
- --- | --- | --- 
-l1 | .468| .31 
-l2 | .5 | .3507  
-cosine | .5902 | .438  
+Loss_fn | Val Auroc | Val Auprc | Train Auroc | Train Auprc
+ --- | --- | --- | ---| ---
+l1 | .468| .31 | .479 | .246
+l2 | .5 | .3507 |.493 | .2527
+cosine | .5902 | .438  | .488 | .254
 
 ## Pipeline: notes
 
@@ -220,6 +220,7 @@ We can train BERT AND a fine tune model at the same time, more efficiency in ite
 ## Pipeline: 10%
 
 [Worse performance on 5% of data for BERT](https://wandb.ai/djosephs/embeddingx/runs/243wehbl?workspace=user-djosephs) -> [try 10%](https://wandb.ai/djosephs/embeddingx/runs/1v8wie8q?workspace=user-djosephs)
+
 
 ## Worries and thoughts
 
@@ -252,4 +253,31 @@ We can train BERT AND a fine tune model at the same time, more efficiency in ite
 	- [SOSOLETO (ICLR 2019 best paper)(4)](https://arxiv.org/abs/1805.09622)
 - I really like Shirley's citation format with the [CONFERENCE YEAR] (Citations), we should use this
 
+# December 23
 
+## Pipeline: 10%
+
+Results not as promising as hoped, and due to time constraints going to focus on 1% with NLP labels (gives us promising comparision)
+
+## Pipeline: 1%, NLP labels
+
+- Add `labels` flag, 
+	- labels = `md` = physician labels
+	- labels = `nlp` = nlp labels
+- [NLP training](https://wandb.ai/djosephs/embeddingx/runs/1wyfzpfj)
+- [Distance Minimization]()
+
+
+## NOTES
+
+1% training value counts
+
+```
+ {'Cardiomegaly': Counter({0.0: 795, 1.0: 142}), 'Atelectasis': Counter({0.0: 711, 1.0: 226}), 'No Finding': Counter({0.0: 764, 1.0: 173}), 'Consolidation': Counter({0.0: 880, 1.0: 57}), 'Pleural Effusion': Counter({1.0: 4       76, 0.0: 461}), 'Edema': Counter({0.0: 589, 1.0: 348})}
+```
+
+Valid
+
+```
+{'Cardiomegaly': Counter({0.0: 97, 1.0: 9}), 'Atelectasis': Counter({0.0: 79, 1.0: 27}), 'No Finding': Counter({0.0: 71, 1.0: 35}), 'Consolidation': Counter({0.0: 100, 1.0: 6}), 'Pleural Effusion': Counter({0.0: 71, 1.0:        35}), 'Edema': Counter({0.0: 79, 1.0: 27})
+```

@@ -1833,7 +1833,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section>
     <h1 class="title">embeddingx Project Status</h1>
     <h2 class="author">David Josephs</h2>
-    <h3 class="date">December 22</h3>
+    <h3 class="date">December 24</h3>
 </section>
 
 <section><section id="december-15" class="title-slide slide level1"><h1>December 15</h1><p><strong>Plans for today</strong></p>
@@ -2180,6 +2180,8 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <th>Loss_fn</th>
 <th>Val Auroc</th>
 <th>Val Auprc</th>
+<th>Train Auroc</th>
+<th>Train Auprc</th>
 </tr>
 </thead>
 <tbody>
@@ -2187,16 +2189,22 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <td>l1</td>
 <td>.468</td>
 <td>.31</td>
+<td>.479</td>
+<td>.246</td>
 </tr>
 <tr class="even">
 <td>l2</td>
 <td>.5</td>
 <td>.3507</td>
+<td>.493</td>
+<td>.2527</td>
 </tr>
 <tr class="odd">
 <td>cosine</td>
 <td>.5902</td>
 <td>.438</td>
+<td>.488</td>
+<td>.254</td>
 </tr>
 </tbody>
 </table>
@@ -2253,6 +2261,27 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </ul></li>
 <li>I really like Shirley’s citation format with the [CONFERENCE YEAR] (Citations), we should use this</li>
 </ul>
+</section></section>
+<section><section id="december-23" class="title-slide slide level1"><h1>December 23</h1></section><section id="pipeline-10-1" class="slide level2">
+<h2>Pipeline: 10%</h2>
+<p>Results not as promising as hoped, and due to time constraints going to focus on 1% with NLP labels (gives us promising comparision)</p>
+</section><section id="pipeline-1-nlp-labels" class="slide level2">
+<h2>Pipeline: 1%, NLP labels</h2>
+<ul>
+<li>Add <code>labels</code> flag,
+<ul>
+<li>labels = <code>md</code> = physician labels</li>
+<li>labels = <code>nlp</code> = nlp labels</li>
+</ul></li>
+<li><a href="https://wandb.ai/djosephs/embeddingx/runs/1wyfzpfj">NLP training</a></li>
+<li><a href>Distance Minimization</a></li>
+</ul>
+</section><section id="notes" class="slide level2">
+<h2>NOTES</h2>
+<p>1% training value counts</p>
+<pre><code> {&#39;Cardiomegaly&#39;: Counter({0.0: 795, 1.0: 142}), &#39;Atelectasis&#39;: Counter({0.0: 711, 1.0: 226}), &#39;No Finding&#39;: Counter({0.0: 764, 1.0: 173}), &#39;Consolidation&#39;: Counter({0.0: 880, 1.0: 57}), &#39;Pleural Effusion&#39;: Counter({1.0: 4       76, 0.0: 461}), &#39;Edema&#39;: Counter({0.0: 589, 1.0: 348})}</code></pre>
+<p>Valid</p>
+<pre><code>{&#39;Cardiomegaly&#39;: Counter({0.0: 97, 1.0: 9}), &#39;Atelectasis&#39;: Counter({0.0: 79, 1.0: 27}), &#39;No Finding&#39;: Counter({0.0: 71, 1.0: 35}), &#39;Consolidation&#39;: Counter({0.0: 100, 1.0: 6}), &#39;Pleural Effusion&#39;: Counter({0.0: 71, 1.0:        35}), &#39;Edema&#39;: Counter({0.0: 79, 1.0: 27})</code></pre>
 </section></section>
     </div>
   </div>
