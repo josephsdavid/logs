@@ -281,3 +281,72 @@ Valid
 ```
 {'Cardiomegaly': Counter({0.0: 97, 1.0: 9}), 'Atelectasis': Counter({0.0: 79, 1.0: 27}), 'No Finding': Counter({0.0: 71, 1.0: 35}), 'Consolidation': Counter({0.0: 100, 1.0: 6}), 'Pleural Effusion': Counter({0.0: 71, 1.0:        35}), 'Edema': Counter({0.0: 79, 1.0: 27})
 ```
+
+# December 28
+
+TODO: loading text and simple stats, lit review begin
+
+## Loading text
+
+* After reading, splitting up doesnt make sense to me, discuss with Mars
+* Currently splitting by `1.` etc, will figure out what makes more sense this evening
+* Pandas way slow for troubleshooting this, using csv dictreader instead for now
+
+```python
+def csv_to_dict(f: str) -> Dict[Any, Any]:
+    # significantly faster than pandas
+    reader = csv.DictReader(open(f))
+    out = {}
+    for row in tqdm.tqdm(reader, desc=f"reading {f}"):
+        for column, value in row.items():
+            out.setdefault(column, []).append(value)
+    return out
+```
+
+## Loading Text: splitting
+
+Add flag for if we want to split into subsentences or not
+
+```python
+def load_captions(csv_path: str=CHEXPERT_RAD_CSV, split:bool=True)-> List[str]:
+    captions_raw = csv_to_dict(csv_path)["Report Impression"]
+    if not split:
+        cleaner = re.compile('[\W_\d+\s\d+\.\d+]+', re.UNICODE)
+        captions = [re.sub(cleaner, ' ', t).strip() for t in tqdm.tqdm(captions_raw, desc="cleaning")]
+        return captions
+    else:
+        cleaner = re.compile('[\n\s+]')
+        captions = [re.sub(cleaner, ' ', t).strip() for t in captions_raw]
+        splitter = re.compile('[0-9]+')
+        captions = [re.sub(r'[^\w\s]',"",item) for items in tqdm.tqdm([splitter.split(x) for x in captions], desc = "splitting and cleaning") for item in items]
+        captions = [x for x in captions if x != "" and len(x) > 1]
+        return captions
+```
+
+## Loading Text: Summary statistics
+
+- Approximately 2.7 bullet points per report
+- Approximately 75 words per bullet point
+- Approximately 120 words per report
+
+![](both.png)
+
+## Lit review: net2net
+
+This does not feel appropriate for our problem, idea is to translate between two pretrained nets, our goal is instead to pretrain a language model, so even though it is SOTA it is not really making much sense
+
+## Lit review: Question
+
+Should we use sentence bert? Why not just train sentence bert on sentence bert tasks on our data and see how that goes? Seems like a quick win
+
+## Lit review: attgan/controlgan
+
+Same basic underlying principle for these guys, use attention to highlight key phrases and draw them on the image,  the big difference is how we build our loss (outside of normal discriminative stuff). Attgan uses in essence a retrieval task on the embeddings as an objective function, along with a few different resolutions of GAN loss, while controlgan uses a perceptual loss using a pretrained vgg-16 model instead of the retrieval task. Attention gan feels spiritually closer to what we are trying to accomplish.
+
+## Lit review: DF-GAN
+
+The idea here is to address some of the problems in other generative work, involving several discriminative models. Instead of using that, they introduce a penalty on the loss function to center the gradients on real images, which helps the generator converge better. I think one source of novelty for us may be to combine the attention ideas with a similar loss function.
+
+## Lit review: worries
+
+I think one worry focusing on SOTA GAN stuff is that their end goal is to make images and ours is just to pretrain the language model, we dont necessarily care about making high quality images, I think it might be good just to get a simple generative model up and running quickly
