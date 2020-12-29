@@ -2290,30 +2290,37 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>Currently splitting by <code>1.</code> etc, will figure out what makes more sense this evening</li>
 <li>Pandas way slow for troubleshooting this, using csv dictreader instead for now</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> csv_to_dict(f: <span class="bu">str</span>) <span class="op">-&gt;</span> Dict[Any, Any]:</span>
-<span id="cb6-2"><a href="#cb6-2"></a>    <span class="co"># significantly faster than pandas</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>    reader <span class="op">=</span> csv.DictReader(<span class="bu">open</span>(f))</span>
-<span id="cb6-4"><a href="#cb6-4"></a>    out <span class="op">=</span> {}</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="cf">for</span> row <span class="kw">in</span> tqdm.tqdm(reader, desc<span class="op">=</span><span class="ss">f&quot;reading </span><span class="sc">{f}</span><span class="ss">&quot;</span>):</span>
-<span id="cb6-6"><a href="#cb6-6"></a>        <span class="cf">for</span> column, value <span class="kw">in</span> row.items():</span>
-<span id="cb6-7"><a href="#cb6-7"></a>            out.setdefault(column, []).append(value)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>    <span class="cf">return</span> out</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> typing <span class="im">import</span> Dict, Any</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="im">import</span> csv</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">def</span> csv_to_dict(f: <span class="bu">str</span>) <span class="op">-&gt;</span> Dict[Any, Any]:</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="co"># significantly faster than pandas</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    reader <span class="op">=</span> csv.DictReader(<span class="bu">open</span>(f))</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    out <span class="op">=</span> {}</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="cf">for</span> row <span class="kw">in</span> tqdm.tqdm(reader, desc<span class="op">=</span><span class="ss">f&quot;reading </span><span class="sc">{f}</span><span class="ss">&quot;</span>):</span>
+<span id="cb6-8"><a href="#cb6-8"></a>        <span class="cf">for</span> column, value <span class="kw">in</span> row.items():</span>
+<span id="cb6-9"><a href="#cb6-9"></a>            out.setdefault(column, []).append(value)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="cf">return</span> out</span></code></pre></div>
 </section><section id="loading-text-splitting" class="slide level2">
 <h2>Loading Text: splitting</h2>
 <p>Add flag for if we want to split into subsentences or not</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">def</span> load_captions(csv_path: <span class="bu">str</span><span class="op">=</span>CHEXPERT_RAD_CSV, split:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>)<span class="op">-&gt;</span> List[<span class="bu">str</span>]:</span>
-<span id="cb7-2"><a href="#cb7-2"></a>    captions_raw <span class="op">=</span> csv_to_dict(csv_path)[<span class="st">&quot;Report Impression&quot;</span>]</span>
-<span id="cb7-3"><a href="#cb7-3"></a>    <span class="cf">if</span> <span class="kw">not</span> split:</span>
-<span id="cb7-4"><a href="#cb7-4"></a>        cleaner <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&#39;[\W_\d+\s\d+\.\d+]+&#39;</span>, re.UNICODE)</span>
-<span id="cb7-5"><a href="#cb7-5"></a>        captions <span class="op">=</span> [re.sub(cleaner, <span class="st">&#39; &#39;</span>, t).strip() <span class="cf">for</span> t <span class="kw">in</span> tqdm.tqdm(captions_raw, desc<span class="op">=</span><span class="st">&quot;cleaning&quot;</span>)]</span>
-<span id="cb7-6"><a href="#cb7-6"></a>        <span class="cf">return</span> captions</span>
-<span id="cb7-7"><a href="#cb7-7"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-8"><a href="#cb7-8"></a>        cleaner <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&#39;[</span><span class="ch">\n</span><span class="st">\s+]&#39;</span>)</span>
-<span id="cb7-9"><a href="#cb7-9"></a>        captions <span class="op">=</span> [re.sub(cleaner, <span class="st">&#39; &#39;</span>, t).strip() <span class="cf">for</span> t <span class="kw">in</span> captions_raw]</span>
-<span id="cb7-10"><a href="#cb7-10"></a>        splitter <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&#39;[0-9]+\.&#39;</span>)</span>
-<span id="cb7-11"><a href="#cb7-11"></a>        captions <span class="op">=</span> [re.sub(<span class="vs">r&#39;[^\w\s]&#39;</span>,<span class="st">&quot;&quot;</span>,item) <span class="cf">for</span> items <span class="kw">in</span> tqdm.tqdm([splitter.split(x) <span class="cf">for</span> x <span class="kw">in</span> captions], desc <span class="op">=</span> <span class="st">&quot;splitting and cleaning&quot;</span>) <span class="cf">for</span> item <span class="kw">in</span> items]</span>
-<span id="cb7-12"><a href="#cb7-12"></a>        captions <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> captions <span class="cf">if</span> x <span class="op">!=</span> <span class="st">&quot;&quot;</span> <span class="kw">and</span> <span class="bu">len</span>(x) <span class="op">&gt;</span> <span class="dv">1</span>]</span>
-<span id="cb7-13"><a href="#cb7-13"></a>        <span class="cf">return</span> captions</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> constants <span class="im">import</span> CHEXPERT_RAD_CSV</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="im">import</span> re</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="im">import</span> tqdm</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="kw">def</span> load_captions(csv_path: <span class="bu">str</span><span class="op">=</span>CHEXPERT_RAD_CSV, split:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>)<span class="op">-&gt;</span> List[<span class="bu">str</span>]:</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    captions_raw <span class="op">=</span> csv_to_dict(csv_path)[<span class="st">&quot;Report Impression&quot;</span>]</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    <span class="cf">if</span> <span class="kw">not</span> split:</span>
+<span id="cb7-9"><a href="#cb7-9"></a>        cleaner <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&#39;[\W_\d+\s\d+\.\d+]+&#39;</span>, re.UNICODE)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>        captions <span class="op">=</span> [re.sub(cleaner, <span class="st">&#39; &#39;</span>, t).strip() <span class="cf">for</span> t <span class="kw">in</span> tqdm.tqdm(captions_raw, desc<span class="op">=</span><span class="st">&quot;cleaning&quot;</span>)]</span>
+<span id="cb7-11"><a href="#cb7-11"></a>        <span class="cf">return</span> captions</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-13"><a href="#cb7-13"></a>        cleaner <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&#39;[</span><span class="ch">\n</span><span class="st">\s+]&#39;</span>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>        captions <span class="op">=</span> [re.sub(cleaner, <span class="st">&#39; &#39;</span>, t).strip() <span class="cf">for</span> t <span class="kw">in</span> captions_raw]</span>
+<span id="cb7-15"><a href="#cb7-15"></a>        splitter <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&#39;[0-9]+\.&#39;</span>)</span>
+<span id="cb7-16"><a href="#cb7-16"></a>        captions <span class="op">=</span> [re.sub(<span class="vs">r&#39;[^\w\s]&#39;</span>,<span class="st">&quot;&quot;</span>,item) <span class="cf">for</span> items <span class="kw">in</span> tqdm.tqdm([splitter.split(x) <span class="cf">for</span> x <span class="kw">in</span> captions], desc <span class="op">=</span> <span class="st">&quot;splitting and cleaning&quot;</span>) <span class="cf">for</span> item <span class="kw">in</span> items]</span>
+<span id="cb7-17"><a href="#cb7-17"></a>        captions <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> captions <span class="cf">if</span> x <span class="op">!=</span> <span class="st">&quot;&quot;</span> <span class="kw">and</span> <span class="bu">len</span>(x) <span class="op">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb7-18"><a href="#cb7-18"></a>        <span class="cf">return</span> captions</span></code></pre></div>
 </section><section id="loading-text-summary-statistics-word-level" class="slide level2">
 <h2>Loading Text: Summary statistics: Word level</h2>
 <ul>
@@ -2330,6 +2337,10 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <ul>
 <li>it looks like splitting at number followed by period works, please verify</li>
 <li>what sort of cleanup do we need to do on the text? For easy task of classification it didnt really matter, for a more complex task, what are best practices?</li>
+<li>For Mars, currently the loading function returns a list of strings, would it be better if it returned tokens?
+<ul>
+<li>If so, the code to turn text into tokens is <a href="https://github.com/marshuang80/embeddingx/blob/e478039e268890b679bb4d9fef57235c1c61e9ad/dataset/chexpert_joint.py#L90">here</a></li>
+</ul></li>
 </ul>
 </section><section id="lit-review-net2net" class="slide level2">
 <h2>Lit review: net2net</h2>

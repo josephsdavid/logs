@@ -293,6 +293,8 @@ TODO: loading text and simple stats, lit review begin
 * Pandas way slow for troubleshooting this, using csv dictreader instead for now
 
 ```python
+from typing import Dict, Any
+import csv
 def csv_to_dict(f: str) -> Dict[Any, Any]:
     # significantly faster than pandas
     reader = csv.DictReader(open(f))
@@ -308,6 +310,11 @@ def csv_to_dict(f: str) -> Dict[Any, Any]:
 Add flag for if we want to split into subsentences or not
 
 ```python
+from constants import CHEXPERT_RAD_CSV
+import re
+from typing import List
+import tqdm
+
 def load_captions(csv_path: str=CHEXPERT_RAD_CSV, split:bool=True)-> List[str]:
     captions_raw = csv_to_dict(csv_path)["Report Impression"]
     if not split:
@@ -338,6 +345,8 @@ def load_captions(csv_path: str=CHEXPERT_RAD_CSV, split:bool=True)-> List[str]:
 
 - it looks like splitting at number followed by period works, please verify
 - what sort of cleanup do we need to do on the text? For easy task of classification it didnt really matter, for a more complex task, what are best practices?
+- For Mars, currently the loading function returns a list of strings, would it be better if it returned tokens? 
+	- If so, the code to turn text into tokens is [here](https://github.com/marshuang80/embeddingx/blob/e478039e268890b679bb4d9fef57235c1c61e9ad/dataset/chexpert_joint.py#L90)
 
 ## Lit review: net2net
 
