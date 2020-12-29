@@ -337,7 +337,7 @@ def load_captions(csv_path: str=CHEXPERT_RAD_CSV, split:bool=True)-> List[str]:
 ## Loading Text: Questions for Mars/Shirley
 
 - it looks like splitting at number followed by period works, please verify
-- what sort of cleanup do we need to do?? I am not too comfortable
+- what sort of cleanup do we need to do on the text? For easy task of classification it didnt really matter, for a more complex task, what are best practices?
 
 ## Lit review: net2net
 
