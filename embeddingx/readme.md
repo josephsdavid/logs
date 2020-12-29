@@ -332,9 +332,9 @@ def load_captions(csv_path: str=CHEXPERT_RAD_CSV, split:bool=True)-> List[str]:
 
 ## Loading Text: Summary statistics: Word level
 
-- Approximately 2.7 bullet points per report
-- Approximately 75 words per bullet point
-- Approximately 120 words per report
+- Approximately 3.45 bullet points per report
+- Approximately 19 words per bullet point
+- Approximately 41 words per report
 
 ![](both.png)
 
