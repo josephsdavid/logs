@@ -317,13 +317,13 @@ def load_captions(csv_path: str=CHEXPERT_RAD_CSV, split:bool=True)-> List[str]:
     else:
         cleaner = re.compile('[\n\s+]')
         captions = [re.sub(cleaner, ' ', t).strip() for t in captions_raw]
-        splitter = re.compile('[0-9]+')
+        splitter = re.compile('[0-9]+\.')
         captions = [re.sub(r'[^\w\s]',"",item) for items in tqdm.tqdm([splitter.split(x) for x in captions], desc = "splitting and cleaning") for item in items]
         captions = [x for x in captions if x != "" and len(x) > 1]
         return captions
 ```
 
-## Loading Text: Summary statistics
+## Loading Text: Summary statistics: Word level
 
 - Approximately 2.7 bullet points per report
 - Approximately 75 words per bullet point
@@ -331,13 +331,28 @@ def load_captions(csv_path: str=CHEXPERT_RAD_CSV, split:bool=True)-> List[str]:
 
 ![](both.png)
 
+## Loading Text: Summary statistics: Letter Level
+![](letter.png)
+
+## Loading Text: Questions for Mars/Shirley
+
+- it looks like splitting at number followed by period works, please verify
+- what sort of cleanup do we need to do?? I am not too comfortable
+
 ## Lit review: net2net
 
 This does not feel appropriate for our problem, idea is to translate between two pretrained nets, our goal is instead to pretrain a language model, so even though it is SOTA it is not really making much sense
 
 ## Lit review: Question
 
-Should we use sentence bert? Why not just train sentence bert on sentence bert tasks on our data and see how that goes? Seems like a quick win
+Should we use sentence bert? Why not just train sentence bert on sentence bert tasks on our data? (This seems like a reviewer question)
+
+- Can frame as we want to learn features that are useful with image model (visiolinguistic features)
+
+
+## Lit review: potentially stupid (but invasive) thought
+
+In [this paper](https://arxiv.org/pdf/1511.02793.pdf) and [several other citing papers](https://scholar.google.com/scholar?cites=13416680903946375913&as_sdt=5,44&sciodt=0,44&hl=en), an autoregressive model is used to generate images from text, and [ImageBert](https://arxiv.org/abs/2001.07966) treats images just the same as a language (make them into 1D vectors), could we do something similar to pretrain our language model? For example treat it as a translation problem or something along these lines?
 
 ## Lit review: attgan/controlgan
 
@@ -349,4 +364,4 @@ The idea here is to address some of the problems in other generative work, invol
 
 ## Lit review: worries
 
-I think one worry focusing on SOTA GAN stuff is that their end goal is to make images and ours is just to pretrain the language model, we dont necessarily care about making high quality images, I think it might be good just to get a simple generative model up and running quickly
+I think one worry focusing on SOTA GAN stuff is that their end goal is to make images and ours is just to pretrain the language model, we dont necessarily care about making high quality images, I think it might be ok to just get a simple GAN that we can debug easily up quickly so we have a win for Serena
