@@ -374,3 +374,7 @@ The idea here is to address some of the problems in other generative work, invol
 ## Lit review: worries
 
 I think one worry focusing on SOTA GAN stuff is that their end goal is to make images and ours is just to pretrain the language model, we dont necessarily care about making high quality images, I think it might be ok to just get a simple GAN that we can debug easily up quickly so we have a win for Serena
+
+## Lit review: Simple generative model
+
+[The original text to image gan](http://proceedings.mlr.press/v48/reed16.pdf) paper has what I think is a very good baseline method we could implement very quickly, and it seems to fit the contrastive thinking we have been toying with pretty well
